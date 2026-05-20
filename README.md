@@ -71,9 +71,4 @@ proyecto-entorno/
 │   └── package.json
 └── postgres/
 
-c:\Users\Karen Sofia\Pictures\Screenshots\Captura de pantalla 2026-05-20 085918.png 
-c:\Users\Karen Sofia\Pictures\Screenshots\Captura de pantalla 2026-05-20 085925.png 
-c:\Users\Karen Sofia\Pictures\Screenshots\Captura de pantalla 2026-05-20 085933.png 
-c:\Users\Karen Sofia\Pictures\Screenshots\Captura de pantalla 2026-05-20 085940.png 
-c:\Users\Karen Sofia\Pictures\Screenshots\Captura de pantalla 2026-05-20 090639.png
 
