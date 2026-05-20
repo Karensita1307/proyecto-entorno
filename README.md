@@ -70,5 +70,11 @@ proyecto-entorno/
 │   ├── index.js
 │   └── package.json
 └── postgres/
+```
+
+## 5. Evidencias del funcionamiento
+
+Reflejadas en la carpeta capturas de pantalla, para mostrar las evidencias de las creaciones de las páginas y evidencia del funcionamiento del decker.
+
 
 
