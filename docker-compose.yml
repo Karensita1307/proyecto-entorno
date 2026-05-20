@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # 1. Servidor Web
+  web-server:
+    build: ./nginx
+    container_name: web_nginx
+    ports:
+      - "8080:80"
+    networks:
+      - red-backend
+    depends_on:
+      - node-app
+
+  # 2. Servidor de Aplicaciones (Node.js)
+  node-app:
+    build: ./node-app
+    container_name: app_node
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db-postgres:5432/${POSTGRES_DB}
+    networks:
+      - red-backend
+      - red-database
+    depends_on:
+      - db-postgres
+
+  # 3. Base de Datos (PostgreSQL)
+  db-postgres:
+    image: postgres:15-alpine
+    container_name: db_postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - datos-postgres:/var/lib/postgresql/data
+    networks:
+      - red-database
+
+  # 4. Administración de Base de Datos (pgAdmin 4)
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: admin_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5050:80"
+    networks:
+      - red-database
+    depends_on:
+      - db-postgres
+
+  # 5. Entorno de Ciencia de Datos (Jupyter Lab)
+  jupyter:
+    image: jupyter/base-notebook
+    container_name: entorno_jupyter
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_TOKEN=mi-token-secreto
+    volumes:
+      - ./jupyter:/home/jovyan/work
+    networks:
+      - red-backend
+
+# Definición de Redes (Aislamiento de Comunicación)
+networks:
+  red-backend:
+    driver: bridge
+  red-database:
+    driver: bridge
+
+# Definición de Volúmenes (Persistencia en el Disco)
+volumes:
+  datos-postgres:
